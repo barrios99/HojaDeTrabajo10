@@ -38,3 +38,20 @@ def prescripcion (nompaciente, nommedicina, nomdoctor):
     pacientes.get(Nombre:nompaciente)[0].relationships.create("toma",medicinas.get(Nombre:nommedicina)[0])
     doctores.get(Nombre:nomdoctor)[0].relationships.create("receta",medicinas.get(Nombre:nommedicina)[0])
 
+def pacienteconoce (paciente1, paciente2):
+    pacientes= gbd.labels.get("Paciente")
+    pacientes.all()
+    pacientes.get(Nombre:paciente1)[0].relationships.create("conoce",pacientes.get(Nombre:paciente2)[0])
+
+def doctorconoce (doctor1, doctor2):
+    doctores= gbd.labels.get("Doctor")
+    doctores.all()
+    doctores.get(Nombre:doctor1)[0].relationships.create("conocedoctor",doctores.get(Nombre:doctor2)[0])
+
+def filtroespecialidad (tipo):
+    buscar= "MATCH (n:Doctor {Especialidad: '"+tipo+"'}) RETURN n"
+    resultados= gbd.query(buscar, data_contents=True)
+    listado= resultados.rows
+    return listados
+
+
