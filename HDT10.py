@@ -54,4 +54,26 @@ def filtroespecialidad (tipo):
     listado= resultados.rows
     return listados
 
+def recomendacion(nompaciente, tipo):
+    buscar = "MATCH (p:Paciente{Nombre:'"+nompaciente+"'})-[:conoce*1..2]->(amigos)-[:consulto]->(d:Doctor{Especialidad:'"+tipo+"'}) RETURN d"
+    resultados = gbd.query(buscar, data_contents=True)
+    listado = resultados.rows
+    loficial = []
+    for x in listado:
+        if x not in loficial:
+            loficial.append(x)
+    return loficial
+
+def recomendaciondoctor (nomdoctor, tipo):
+    buscar = "MATCH (d:Doctor{Nombre:'"+nomdoctor+"'})-[:conocedoctor*1..2]->(a:Doctor{Especialidad:'"+tipo+"'}) RETURN a"
+    resultados = gbd.query(query, data_contents=True)
+    listado = resultados.rows
+    loficial = []
+    for x in listados:
+        if x not in loficial:
+            loficial.append(x)
+    return loficial
+
+
+    
 
