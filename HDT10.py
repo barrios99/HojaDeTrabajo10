@@ -1,10 +1,88 @@
-﻿#Diana de Leon 18607
+#Diana de Leon 18607
 #Fatima Albeño 18060
 #Luis Perez Aju 18212
 #Programa de consulta de doctores y receta de medicinas
 #Base de datos en NEO4J
 
 #Documentacion extraida de https://neo4j-rest-client.readthedocs.io/en/latest/
+
+#Datos para la base
+addPaciente("Fernando","Hombre","20","140","1.72")
+addPaciente("Mario","Hombre","30","160","1.61")
+addPaciente("Roberto","Hombre","22","154","1.83")
+addPaciente("Juan","Hombre","28","145","1.64")
+addPaciente("Antonio","Hombre","63","122","1.41")
+addPaciente("Fernanda","Mujer","19","112","1.43")
+addPaciente("Sofia","Mujer","46","132","1.52")
+addPaciente("Maria","Mujer","15","120","1.30")
+addPaciente("Diana","Mujer","24","123","1.47")
+addPaciente("Ana","Mujer","33","141","1.58")
+
+addDoctor("Saul", "Pediatra", "22334499","saul@gmail.com","Zona 1 de Guatemala")
+addDoctor("Manuel", "Cirujano","1239641","manuel@gmail.com","Fraijanes")
+addDoctor("Estuardo", "Dermatologo", "63109862","estuardo@gmail.com","San Jose Pinula")
+addDoctor("Daniel", "Medico general", "43006901","daniel@gmail.com","Zona 1 de Mixco")
+addDoctor("Alejandro", "Denntista", "36094881","alejandro@gmail.com","Villa Nueva")
+addDoctor("Jazmin", "Oftalmologo", "48930132","jazmin@gmail.com","Zona 1 de Guatemala")
+addDoctor("Susana", "Ginecologa", "66930128","susana@gmail.com","San Lucas")
+addDoctor("Camila", "Traumatologa", "75755326","camila@gmail.com","San Cristobal")
+addDoctor("Izabel", "Fisioterapeuta", "86910751","izabel@gmail.com","Cienaga Grande")
+addDoctor("Joseline", "Cardiologa", "40755697","joseline@gmail.com","Sumpango")
+
+addMedicina("Diclofenaco","500","3","12")
+addMedicina("Vitaflenaco","1000","2","16")
+addMedicina("Tabcin","250","4","4")
+addMedicina("Hibuprofeno","500","2","20")
+addMedicina("Loratadina","300","3","6")
+addMedicina("Panadol","1000","4","4")
+addMedicina("Cardiovital","1000","3","10")
+addMedicina("Aspirina","500","2","15")
+addMedicina("Parecetamol","30","4","8")
+addMedicina("Atarax","25","1","9")
+
+addVisita("Saul","Fernanda")
+addVisita("Manuel","Mario")
+addVisita("Estuardo","Roberto")
+addVisita("Daniel","Juan")
+addVisita("Alejandro","Antonio")
+addVisita("Jazmin","Fernando")
+addVisita("Susana","Sofia")
+addVisita("Camila","Maria")
+addVisita("Izabel","Diana")
+addVisita("Joseline","Ana")
+
+prescripcion("Fernanda","Saul","Diclofenaco")
+prescripcion("Mario","Manuel","Vitaflenaco")
+prescripcion("Roberto","Estuardo","Tabcin")
+prescripcion("Juan","Daniel","Hibuprofeno")
+prescripcion("Antonio","Alejandro","Loratadina")
+prescripcion("Fernando","Jazmin","Panadol")
+prescripcion("Sofia","Susana","Cardiovital")
+prescripcion("Maria","Camila","Aspirina")
+prescripcion("Diana","Izabel","Parecetamol")
+prescripcion("Ana","Joseline","Atarax")
+
+pacienteconoce("Fernanda", "Sutana")
+pacienteconoce("Mario", "Mengana")
+pacienteconoce("Roberto", "Fulano")
+pacienteconoce("Juan", "Milded")
+pacienteconoce("Antonio", "Sandra")
+pacienteconoce("Fernando", "Simon")
+pacienteconoce("Sofia", "Martin")
+pacienteconoce("Maria", "Pablo")
+pacienteconoce("Diana", "Rosa")
+pacienteconoce("Ana", "Flor")
+
+doctorconoce("Saul","Telma")
+doctorconoce("Manuel","Jenny")
+doctorconoce("Estuardo","Wendy")
+doctorconoce("Daniel","Jimena")
+doctorconoce("Alejandro","Alex")
+doctorconoce("Jazmin","Andres")
+doctorconoce("Susana","Edwin")
+doctorconoce("Camila","Gabriela")
+doctorconoce("Izabel","Salome")
+doctorconoce("Joseline","Rubi")
 
 from neo4jrestclient.client import GraphDatabase
 gdb = GraphDatabase("http://localhost:7474", username="neo4j", password="12345")
@@ -217,4 +295,3 @@ while (opcion!=11):
 
 
 print("********Gracias por usar nuestro sistema de recomendacion********\n")
-
