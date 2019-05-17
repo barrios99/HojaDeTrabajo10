@@ -1,6 +1,6 @@
 ﻿#Diana de Leon 18607
 #Fatima Albeño 18060
-#Luis Perez Aju
+#Luis Perez Aju 18212
 #Programa de consulta de doctores y receta de medicinas
 #Base de datos en NEO4J
 
@@ -75,62 +75,146 @@ def recomendaciondoctor (nomdoctor, tipo):
     return loficial
 
 opcion=0
-while (opcion!=11):
-    print("1. Agregar un paciente\n2. Agregar un doctor\n3. Agregar medicina\n4. Paciente visita doctor\n5. Doctor receta medicina\n6. Consultar doctor segun especialidad\n7. Añadir conocido\n8. Añadir doctor conocido\n9. Recomendacion segun conocidos\n10. Doctor recomienda doctor\n11. Salir")
-    opcion=int(input("Ingrese una opcion: "))
+print("1. Agregar un paciente\n2. Agregar un doctor\n3. Agregar medicina\n4. Paciente visita doctor\n5. Doctor receta medicina\n6. Consultar doctor segun especialidad\n7. Añadir conocido\n8. Añadir doctor conocido\n9. Recomendacion segun conocidos\n10. Doctor recomienda doctor\n11. Salir")
+opcion=int(input("Ingrese una opcion: "))
 
+while (opcion!=11):
+    
     if (opcion==1):
+        print("----------Añadir paciente----------")
         nombre=input("Ingrese su nombre: ")
         genero=input("Ingrese su genero: ")
         edad=input("Ingrese su edad: ")
         peso=input("Ingrese su peso: ")
         estatura=input("Ingrese su estatura: ")
         addPaciente(nombre, genero, edad, peso, estatura)
-        print("Se ha añadido exitosamente el paciente")
+        print("Se ha añadido exitosamente el paciente. \n")
         
     elif (opcion==2):
+        print("-----------Añadir doctor-----------")
         nombre=input("Ingrese su nombre: ")
         espec=input("Ingrese su especialidad: ")
         tel=input("Ingrese su numero telefonico: ")
         correo=input("Ingrese su correo: ")
         ubic=input("Ingrese la ubicacion de su clinica: ")
         addDoctor(nombre,espec,tel,correo,ubic)
-        print("Se ha añadido existosamente el doctor")
+        print("Se ha añadido existosamente el doctor. \n")
 
     elif (opcion==3):
-        
+        print("----------Añadir medicina----------")
+        nombre=input("Ingrese el nombre de la medicina: ")
+        dosis=input("Ingrese la dosis de medicina: ")
+        veces=input("Ingrese el intervalo de tiempo de consumo: ")
+        dias=input("Ingrese la cantidad de dias que se tomara la medicina: ")
+        addMedicina(nombre,dosis,veces,dias)
+        print("Se ha añadido exitosamente la medicina. \n")
 
     elif (opcion==4):
+        print("----------Crear consulta----------")
         nombre = input("Ingrese su nombre: ")
         doctor = input("Ingrese el nombre del doctor al que visitó: ")
         try:
             addVisita(nombre,doctor)
-            print("Se agregó su visita con éxito.")
+            print("Se agregó su visita con éxito. \n")
         except IndexError:
                 print("\nLos nombres ingresados no están en la base de datos. \n")
 
     elif (opcion==5):
+        print("----------Recetar medicina----------")
         paciente = input("Ingrese el nombre del paciente: ")
         medicina = input("Ingrese la medicina recomendada: ")
         doctor = input("Ingrese el nombre del doctor: ")
-        reco = prescripcion(paciente, medicina, doctor)
-        for i in reco:
-            print(i)
+        try:
+            prescripcion(paciente, medicina, doctor)
+        except IndexError:
+                print("\nLos datos ingresados no están en la base de datos. \n")
             
     elif (opcion==6):
+        print("----------Buscar doctor por especialidad----------")
         especialidad = input("Ingrese la especialidad del doctor: ")
-        es = filtroespecialidad(especialidad)
-        for i in es:
-            print(i)
+        try:
+            es = filtroespecialidad(especialidad)
+            a=""
+            if es is not None:
+                for i in es:
+                    for x in i:
+                        a+="-"
+                        for c in x:
+                            a+=str(c)+" : "+str(x[c])+"\t"
+                    a+="\n"
+                print(a)
+            else:
+                print("\nNo hay ningun doctor con esa especialidad en la base de datos. \n")
+        except IndexError:
+                print("\nNo hay ningun doctor con esa especialidad en la base de datos. \n")
         
     elif (opcion==7):
+        print("----------Añadir a alguien a mis conocidos----------")
         conocido=input("Ingrese su nombre: ")
-        conocido2=input("Ingrese el nombre de la persona que quiere recomendar: ")
-        pacienteconoce(conocido, conocido2)
-        print("Se ha añadido a la persona conocida con exito.")
+        conocido2=input("Ingrese el nombre de su conocido: ")
+        try:
+            pacienteconoce(conocido, conocido2)
+            print("Se ha añadido a la persona conocida con exito. \n")
+        except IndexError:
+                print("\nLos nombres ingresados no están en la base de datos. \n")
 
-    #elif (opcion==8):
+    elif (opcion==8):
+        print("----------Doctor añade colega----------")
+        conocido=input("Ingrese su nombre: ")
+        conocido2=input("Ingrese el nombre de su conocido: ")
+        try:
+            doctorconoce(conocido, conocido2)
+            print("Se ha añadido a la persona conocida con exito. \n")
+        except IndexError:
+                print("\nLos nombres ingresados no están en la base de datos. \n")
+
+    elif (opcion==9):
+        print("----------Recomendar doctor de un conocido----------")
+        nombre=input("Ingrese su nombre: ")
+        es=input("Ingrese la especialidad del doctor que necesita: ")
+        try:
+            lista=recomendacion(nombre,es)
+            a=""
+            if lista is not None:
+                for i in lista:
+                    for x in i:
+                        a+="-"
+                        for c in x:
+                            a+=str(c)+" : "+str(x[c])+"\t"
+                    a+="\n"
+                print(a)
+            else:
+                print("\nNo hay ningun doctor con esa especialidad en la base de datos. \n")
+        except IndexError:
+            print("\nLos datos ingresados no están en la base de datos. \n")
+            
+    elif (opcion==10):
+        print("----------Doctor recomienda otro doctor----------")
+        nombre=input("Ingrese el nombre de su doctor: ")
+        es=input("Ingrese la especialidad del doctor que necesita: ")
+        try:
+            lista=recomendaciondoctor(nombre,es)
+            a=""
+            if lista is not None:
+                for i in lista:
+                    for x in i:
+                        a+="-"
+                        for c in x:
+                            a+=str(c)+" : "+str(x[c])+"\t"
+                    a+="\n"
+                print(a)
+            else:
+                print("\nNo hay ningun doctor con esa especialidad en la base de datos. \n")
+        except IndexError:
+            print("\nLos datos ingresados no están en la base de datos. \n")
 
     else:
-        print("La opcion no es valida")
+        print("La opcion no es valida. \n")
+
+    print("\n*****************************************************************\n")
+    print("1. Agregar un paciente\n2. Agregar un doctor\n3. Agregar medicina\n4. Paciente visita doctor\n5. Doctor receta medicina\n6. Consultar doctor segun especialidad\n7. Añadir conocido\n8. Añadir doctor conocido\n9. Recomendacion segun conocidos\n10. Doctor recomienda doctor\n11. Salir")
+    opcion=int(input("Ingrese una opcion: "))
+
+
+print("********Gracias por usar nuestro sistema de recomendacion********\n")
 
